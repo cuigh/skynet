@@ -45,11 +45,21 @@ docker run -e DB_MONGO_SKYNET_ADDRESS=mongodb://localhost:27017/skynet --name sk
 
 ### 手动编译
 
+编译前端
+
 ```shell
-go install github.com/cuigh/skynet
+cd ui
+yarn install
+yarn run build
 ```
 
-编译后修改 app.yml 中的数据库地址，直接运行即可
+编译后端
+
+```shell
+go build
+```
+
+编译成功后修改 app.yml 中的数据库地址，直接运行即可
 
 ```shell
 skynet -config /etc/skynet/app.yml

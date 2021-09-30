@@ -1,0 +1,66 @@
+<template>
+    <div class="section">
+        <n-hr v-if="divider === 'top' || divider === 'all'" style="margin-top: 0" />
+        <n-element class="title" v-if="title" style>
+            <div>
+                <n-h4>{{ title }}</n-h4>
+                <n-text depth="3" v-if="subtitle">{{ subtitle }}</n-text>
+            </div>
+            <n-space :size="6" justify="end" v-if="$slots.action">
+                <slot name="action" />
+            </n-space>
+        </n-element>
+        <n-hr v-if="divider === 'middle' || divider === 'all'" style="margin-top: 0" />
+        <div class="body" v-show="!collapsed">
+            <slot />
+        </div>
+        <n-hr v-if="divider === 'bottom' || divider === 'all'" style="margin-bottom: 0" />
+    </div>
+</template>
+  
+<script setup lang="ts">
+import {
+    NElement,
+    NSpace,
+    NH4,
+    NHr,
+    NText,
+} from "naive-ui";
+
+const props = defineProps({
+    title: {
+        type: String,
+    },
+    subtitle: {
+        type: String,
+    },
+    divider: {
+        type: String,
+    },
+    collapsed: {
+        type: Boolean,
+        default: false,
+    }
+})
+</script>
+
+<style lang="scss" scoped>
+// .section {
+//     padding: 6px;
+//     box-shadow: 0 0px 3px 1px rgb(10 10 10 / 10%);
+// }
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // padding-bottom: 6px;
+    .n-h4 {
+        display: inline;
+        margin-right: 8px;
+    }
+}
+.body {
+    margin-top: 6px;
+}
+</style>
+  

@@ -1,0 +1,28 @@
+name: skynet
+banner: false
+
+web:
+  entries:
+    - address: :8001
+  authorize: '?'
+
+skynet:
+  token_key: skynet
+  token_expiry: 30m
+  lock: mongo
+  resolver: direct # todo: swarm/nacos/etcd
+
+db:
+  mongo:
+    skynet:
+      address: mongodb://localhost:27017/skynet
+      max_pool_size: 10
+
+log:
+  loggers:
+    - level: info
+      writers: console
+  writers:
+    - name: console
+      type: console
+      layout: '[{L}]{T}: {M}{N}'

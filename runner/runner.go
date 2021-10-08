@@ -1,13 +1,12 @@
 package runner
 
 import (
-	"encoding/json"
 	"fmt"
 	"sync"
 	"time"
 
+	"github.com/cuigh/auxo/app"
 	"github.com/cuigh/auxo/app/container"
-	"github.com/cuigh/auxo/config"
 	"github.com/cuigh/auxo/ext/times"
 	"github.com/cuigh/auxo/log"
 	"github.com/cuigh/auxo/net/web"
@@ -51,31 +50,20 @@ func RegisterFunc(name string, handler func(job *contract.Job) error) {
 	handlers[name] = HandlerFunc(handler)
 }
 
-type Runner struct {
-	ws *web.Server
-}
-
-func NewRunner(ws *web.Server) *Runner {
+func Serve(ws *web.Server) func(ctx *app.Context) error {
 	ws.Post("/task/execute", HandleExecute)
 	ws.Post("/task/split", HandleSplit)
-	return &Runner{
-		ws: ws,
+	return func(ctx *app.Context) error {
+		app.Run(ws)
+		return nil
 	}
-}
-
-func (r *Runner) Serve() error {
-	return r.ws.Serve()
-}
-
-func (r *Runner) Close(timeout time.Duration) {
-	r.ws.Close(timeout)
 }
 
 func HandleExecute(ctx web.Context) error {
 	var job contract.Job
 	err := ctx.Bind(&job)
 	if err != nil {
-		return ctx.JSON(contract.Result{Code: 1, Info: err.Error()})
+		return ctx.JSON(contract.Result{Code: contract.CodeFailed, Info: err.Error()})
 	}
 
 	go handle(&job)
@@ -86,25 +74,15 @@ func HandleSplit(ctx web.Context) error {
 	var job contract.Job
 	err := ctx.Bind(&job)
 	if err != nil {
-		return ctx.JSON(contract.Result{Code: 1, Info: err.Error()})
+		return ctx.JSON(contract.Result{Code: contract.CodeFailed, Info: err.Error()})
 	}
-
-	// === debug ===
-	b, err := json.Marshal(job)
-	if err != nil {
-		return err
-	}
-	log.Get("task").Infof("split job: %s", b)
-	// === debug ===
 
 	result := split(&job)
 	return ctx.JSON(result)
 }
 
 func handle(job *contract.Job) {
-	// === debug ===
-	log.Get("task").Infof("handle job: %s", job)
-	// === debug ===
+	log.Get("task").Debugf("handle job: %s", job)
 
 	start := time.Now()
 
@@ -153,9 +131,7 @@ func notify(job *contract.Job, start time.Time, code int32, info string) {
 }
 
 func split(job *contract.Job) *contract.SplitResult {
-	// === debug ===
-	log.Get("task").Infof("split job: %s", job)
-	// === debug ===
+	log.Get("task").Debugf("split job: %s", job)
 
 	h := handlers[job.Handler]
 	if h == nil {
@@ -172,14 +148,4 @@ func split(job *contract.Job) *contract.SplitResult {
 		return &contract.SplitResult{Code: contract.CodeFailed, Info: err.Error()}
 	}
 	return &contract.SplitResult{Code: contract.CodeSuccess, Batches: batches}
-}
-
-func init() {
-	// for test
-	config.SetDefaultValue("skynet.address", "http://localhost:8001")
-	//config.SetDefaultValue("skynet.token", "")
-	RegisterFunc("Test", func(job *contract.Job) error {
-		time.Sleep(time.Second * 3)
-		return nil
-	})
 }

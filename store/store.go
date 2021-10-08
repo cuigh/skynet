@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cuigh/auxo/app"
 	"github.com/cuigh/auxo/app/container"
 	mongodb "github.com/cuigh/auxo/db/mongo"
 	"github.com/cuigh/auxo/errors"
@@ -63,13 +62,10 @@ func (t Time) Format(layout string) string {
 }
 
 func init() {
-	app.OnInit(func() error {
-		container.Put(NewDatabase, container.Name("database"))
-		container.Put(NewUserStore, container.Name("store.user"))
-		container.Put(NewTaskStore, container.Name("store.task"))
-		container.Put(NewJobStore, container.Name("store.job"))
-		container.Put(NewRoleStore, container.Name("store.role"))
-		container.Put(NewConfigStore, container.Name("store.config"))
-		return nil
-	})
+	container.Put(NewDatabase, container.Name("database"))
+	container.Put(NewUserStore, container.Name("store.user"))
+	container.Put(NewTaskStore, container.Name("store.task"))
+	container.Put(NewJobStore, container.Name("store.job"))
+	container.Put(NewRoleStore, container.Name("store.role"))
+	container.Put(NewConfigStore, container.Name("store.config"))
 }

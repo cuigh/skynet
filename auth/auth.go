@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cuigh/auxo/app"
 	"github.com/cuigh/auxo/app/container"
 	"github.com/cuigh/auxo/cache"
 	"github.com/cuigh/auxo/data"
@@ -12,15 +11,6 @@ import (
 	"github.com/cuigh/auxo/net/web"
 	"github.com/cuigh/skynet/store"
 )
-
-//var perms = map[string]string{
-//	"user.save":     "user.edit",
-//	"task.delete":   "task.delete",
-//	"task.edit":     "task.edit",
-//	"task.execute":  "task.execute",
-//	"job.retry":     "job.retry",
-//	"system.manage": "system.manage",
-//}
 
 type Authorizer struct {
 	us store.UserStore
@@ -99,9 +89,6 @@ func loadRolePerms(rs store.RoleStore) (RolePerms, error) {
 }
 
 func init() {
-	app.OnInit(func() error {
-		container.Put(NewAuthorizer, container.Name("authorizer"))
-		container.Put(NewAuthenticator, container.Name("authenticator"))
-		return nil
-	})
+	container.Put(NewAuthorizer, container.Name("authorizer"))
+	container.Put(NewAuthenticator, container.Name("authenticator"))
 }

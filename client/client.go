@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/cuigh/auxo/app"
 	"github.com/cuigh/auxo/app/container"
 	"github.com/cuigh/auxo/config"
 	"github.com/cuigh/auxo/errors"
@@ -95,8 +94,5 @@ func (c *Client) do(path string, args interface{}) error {
 }
 
 func init() {
-	app.OnInit(func() error {
-		container.Put(func() *Client { return NewClient() }, container.Name("skynet.client"))
-		return nil
-	})
+	container.Put(func() *Client { return NewClient() }, container.Name("skynet.client"))
 }

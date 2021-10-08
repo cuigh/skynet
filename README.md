@@ -65,7 +65,9 @@ go build
 skynet -config /etc/skynet/app.yml
 ```
 
-### 预编译二进制文件(TODO)
+### 预编译二进制文件
+
+TODO
 
 ## 执行器(Runner)
 
@@ -78,7 +80,6 @@ import (
 	"github.com/cuigh/auxo/app"
 	"github.com/cuigh/auxo/app/flag"
 	"github.com/cuigh/auxo/net/web"
-	"github.com/cuigh/auxo/net/web/filter"
 	"github.com/cuigh/skynet/runner"
 )
 
@@ -87,18 +88,8 @@ func main() {
 	app.Version = "0.1"
 	app.Desc = "A test runner for Skynet"
 	app.Flags.Register(flag.All)
-	app.Action = func(ctx *app.Context) error {
-		app.Run(createWebServer())
-		return nil
-	}
+	app.Action = runner.Serve(web.Default(":8002"))
 	app.Start()
-}
-
-func createWebServer() *web.Server {
-	ws := web.Default(":8002")
-	ws.Use(filter.NewRecover())
-	ws.Post("/task/execute", runner.HandleExecute)
-	return ws
 }
 
 func init() {

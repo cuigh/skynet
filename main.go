@@ -4,16 +4,19 @@ import (
 	"embed"
 	"io/fs"
 	"net/http"
+	"time"
 
 	"github.com/cuigh/auxo/app"
 	"github.com/cuigh/auxo/app/container"
 	"github.com/cuigh/auxo/app/flag"
+	"github.com/cuigh/auxo/config"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/data/valid"
 	"github.com/cuigh/auxo/errors"
 	"github.com/cuigh/auxo/net/web"
 	"github.com/cuigh/auxo/net/web/filter"
 	_ "github.com/cuigh/skynet/api"
+	"github.com/cuigh/skynet/contract"
 	_ "github.com/cuigh/skynet/lock"
 	"github.com/cuigh/skynet/runner"
 	"github.com/cuigh/skynet/schedule"
@@ -100,4 +103,14 @@ func findFilters(names ...string) []web.Filter {
 		filters = append(filters, container.Find(name).(web.Filter))
 	}
 	return filters
+}
+
+func init() {
+	// runner testing
+	config.SetDefaultValue("skynet.address", "http://localhost:8001")
+	//config.SetDefaultValue("skynet.token", "")
+	runner.RegisterFunc("Test", func(job *contract.Job) error {
+		time.Sleep(time.Second * 3)
+		return nil
+	})
 }

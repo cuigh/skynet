@@ -5,6 +5,9 @@
       <n-tab-pane name="email" tab="邮件">
         <Email />
       </n-tab-pane>
+      <n-tab-pane name="sms" tab="短信">
+        <Sms />
+      </n-tab-pane>
       <n-tab-pane name="wecom" tab="企业微信">
         <Wecom />
       </n-tab-pane>
@@ -12,7 +15,7 @@
     <n-alert
       type="info"
       :show-icon="false"
-    >可以在模版中使用变量，有效变量如下：error, task, handler, runner, job, mode, fire, args, scheduler, duration.</n-alert>
+    >可以在模版中使用这些变量：error, task, handler, runner, job, mode, fire, args, scheduler, duration.</n-alert>
   </n-space>
 </template>
 
@@ -26,4 +29,5 @@ import {
 import PageHeader from "@/components/PageHeader.vue";
 import Email from "./modules/Email.vue";
 import Wecom from "./modules/Wecom.vue";
+import Sms from "./modules/Sms.vue";
 </script>

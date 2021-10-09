@@ -12,6 +12,7 @@ import (
 	texttpl "text/template"
 	"time"
 
+	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/errors"
 	"github.com/cuigh/auxo/log"
@@ -135,7 +136,7 @@ type EmailChannel struct {
 func (c EmailChannel) Send(options data.Options, users []*store.User, vars data.Map) (err error) {
 	const (
 		defaultTitle = "[Skynet]Failed to execute task: {{ .task }}"
-		defaultBody  = "Task: {{ .task }}，Error: {{ .error }}"
+		defaultBody  = "Task: {{ .task }}，Job: {{ .job }}，Error: {{ .error }}"
 	)
 
 	if options.Get("enabled") != "true" {
@@ -198,7 +199,7 @@ type WeComChannel struct {
 func (c WeComChannel) Send(options data.Options, users []*store.User, vars data.Map) (err error) {
 	const (
 		defaultTitle = "[Skynet]Failed to execute task: {{ .task }}"
-		defaultBody  = "Task: {{ .task }}，Error: {{ .error }}"
+		defaultBody  = "Task: {{ .task }}，Job: {{ .job }}，Error: {{ .error }}"
 	)
 
 	if options.Get("enabled") != "true" {
@@ -298,4 +299,86 @@ func (c WeComChannel) post(url string, args data.Map) error {
 		return errors.Coded(result.Code, result.Msg)
 	}
 	return nil
+}
+
+type SmsChannel struct {
+}
+
+func (c SmsChannel) Send(options data.Options, users []*store.User, vars data.Map) (err error) {
+	const (
+		defaultBody = "Task: {{ .task }}，Job: {{ .job }}，Error: {{ .error }}"
+	)
+
+	if options.Get("enabled") != "true" {
+		return nil
+	}
+
+	var (
+		receiver = options.Get("receiver")
+		provider = options.Get("provider")
+		body     = options.Get("body")
+	)
+
+	var phones []string
+	for _, user := range users {
+		if user.Phone != "" {
+			phones = append(phones, user.Email)
+		}
+	}
+	if len(phones) == 0 {
+		if receiver == "" {
+			return nil
+		}
+		phones = strings.Split(receiver, ",")
+	}
+
+	if body == "" {
+		body = defaultBody
+	}
+	if body, err = transform(true, body, vars); err != nil {
+		return err
+	}
+	vars.Set("content", body)
+
+	switch provider {
+	case "aliyun":
+		return c.sendAliyun(phones, options, vars)
+	case "":
+		return errors.New("missing provider option")
+	default:
+		return errors.New("unknown provider: " + provider)
+	}
+
+}
+
+func (c SmsChannel) sendAliyun(phones []string, options data.Options, args data.Map) (err error) {
+	var (
+		key    = options.Get("key")
+		secret = options.Get("secret")
+		template = options.Get("template")
+		sign = options.Get("sign")
+	)
+	client, err := dysmsapi.NewClientWithAccessKey("cn-beijing", key, secret)
+
+	b, err := json.Marshal(args)
+	if err != nil {
+		return err
+	}
+
+	req := dysmsapi.CreateSendSmsRequest()
+	req.Scheme = "https"
+	req.PhoneNumbers = strings.Join(phones, ",")
+	req.SignName = sign
+	req.TemplateCode = template
+	req.TemplateParam = string(b)
+	resp, err := client.SendSms(req)
+	if err != nil {
+		return err
+	}
+
+	//{  "RequestId": "614048FB-0619-4439-A1D5-AA8B218A****",  "Message": "OK",  "BizId": "386715418801811068^0",  "Code": "OK"}
+	if resp.Code == "OK" {
+		return nil
+	}
+	return errors.New(resp.Message)
 }

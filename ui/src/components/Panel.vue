@@ -11,9 +11,11 @@
             </n-space>
         </n-element>
         <n-hr v-if="divider === 'middle' || divider === 'all'" style="margin-top: 0" />
-        <div class="body" v-show="!collapsed">
-            <slot />
-        </div>
+        <n-collapse-transition :collapsed="!collapsed">
+            <div class="body">
+                <slot />
+            </div>
+        </n-collapse-transition>
         <n-hr v-if="divider === 'bottom' || divider === 'all'" style="margin-bottom: 0" />
     </div>
 </template>
@@ -25,6 +27,7 @@ import {
     NH4,
     NHr,
     NText,
+    NCollapseTransition,
 } from "naive-ui";
 
 const props = defineProps({

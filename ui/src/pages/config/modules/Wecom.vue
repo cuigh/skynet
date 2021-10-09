@@ -94,23 +94,17 @@ import {
 import { SaveOutline as SaveIcon, } from "@vicons/ionicons5";
 import configApi from "@/api/config";
 import type { WecomOptions } from "@/api/config";
-import { useForm } from "@/utils/form";
+import { requiredRule, useForm } from "@/utils/form";
 
 const key = 'alert.wecom'
 const form = ref();
 const rules: any = {
+  mode: requiredRule(),
+  msg_type: requiredRule(),
 };
 const model = ref({
-  enabled: '',
-  mode: '',
-  robot_key: '',
-  corp_id: '',
-  app_id: '',
-  app_secret: '',
-  receiver: '',
-  title: '',
-  body: '',
-  msg_type: '',
+  mode: 'robot',
+  msg_type: 'markdown',
 } as WecomOptions)
 const enabled = computed({
   get() { return model.value.enabled === 'true' },

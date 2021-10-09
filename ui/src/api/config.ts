@@ -27,6 +27,17 @@ export interface WecomOptions {
     msg_type: string,
 }
 
+export interface SmsOptions {
+    enabled: string,
+    provider: string,
+    key: string,
+    secret: string,
+    sign: string,
+    template: string,
+    receiver?: string,
+    body?: string,
+}
+
 export class ConfigApi {
     find(id: string) {
         return ajax.get<Object>('/config/find', { id })

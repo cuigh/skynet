@@ -52,7 +52,7 @@
 
 "@jest/types@^26.6.2":
   version "26.6.2"
-  resolved "https://registry.nlark.com/@jest/types/download/@jest/types-26.6.2.tgz?cache=0&sync_timestamp=1631095956098&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40jest%2Ftypes%2Fdownload%2F%40jest%2Ftypes-26.6.2.tgz#bef5a532030e1d88a2f5a6d933f84e97226ed48e"
+  resolved "https://registry.npmmirror.com/@jest/types/download/@jest/types-26.6.2.tgz#bef5a532030e1d88a2f5a6d933f84e97226ed48e"
   integrity sha1-vvWlMgMOHYii9abZM/hOlyJu1I4=
   dependencies:
     "@types/istanbul-lib-coverage" "^2.0.0"
@@ -101,19 +101,19 @@
     "@types/lodash" "*"
 
 "@types/lodash@*", "@types/lodash@^4.14.170":
-  version "4.14.173"
-  resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.173.tgz#9d3b674c67a26cf673756f6aca7b429f237f91ed"
-  integrity sha1-nTtnTGeibPZzdW9qyntCnyN/ke0=
+  version "4.14.175"
+  resolved "https://registry.npmmirror.com/@types/lodash/download/@types/lodash-4.14.175.tgz#b78dfa959192b01fae0ad90e166478769b215f45"
+  integrity sha1-t436lZGSsB+uCtkOFmR4dpshX0U=
 
 "@types/node@*":
-  version "16.9.6"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.9.6.tgz#040a64d7faf9e5d9e940357125f0963012e66f04"
-  integrity sha1-BApk1/r55dnpQDVxJfCWMBLmbwQ=
+  version "16.10.3"
+  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-16.10.3.tgz#7a8f2838603ea314d1d22bb3171d899e15c57bd5"
+  integrity sha1-eo8oOGA+oxTR0iuzFx2JnhXFe9U=
 
 "@types/node@^14.14.10":
-  version "14.17.18"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.17.18.tgz#0198489a751005f71217744aa966cd1f29447c81"
-  integrity sha1-AZhImnUQBfcSF3RKqWbNHylEfIE=
+  version "14.17.21"
+  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-14.17.21.tgz#6359d8cf73481e312a43886fa50afc70ce5592c6"
+  integrity sha1-Y1nYz3NIHjEqQ4hvpQr8cM5VksY=
 
 "@types/node@^14.17.4":
   version "14.17.9"
@@ -122,7 +122,7 @@
 
 "@types/node@~14.14.31":
   version "14.14.45"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.14.45.tgz#ec2dfb5566ff814d061aef7e141575aedba245cf"
+  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-14.14.45.tgz#ec2dfb5566ff814d061aef7e141575aedba245cf"
   integrity sha1-7C37VWb/gU0GGu9+FBV1rtuiRc8=
 
 "@types/yargs-parser@*":
@@ -451,9 +451,9 @@ date-fns-tz@^1.1.6:
   integrity sha1-k8vzVOKuss0xL/oy5GLBlDzyCo4=
 
 date-fns@^2.19.0:
-  version "2.24.0"
-  resolved "https://registry.nlark.com/date-fns/download/date-fns-2.24.0.tgz?cache=0&sync_timestamp=1631857140003&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdate-fns%2Fdownload%2Fdate-fns-2.24.0.tgz#7d86dc0d93c87b76b63d213b4413337cfd1c105d"
-  integrity sha1-fYbcDZPIe3a2PSE7RBMzfP0cEF0=
+  version "2.25.0"
+  resolved "https://registry.npmmirror.com/date-fns/download/date-fns-2.25.0.tgz?cache=0&sync_timestamp=1633421590526&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fdate-fns%2Fdownload%2Fdate-fns-2.25.0.tgz#8c5c8f1d958be3809a9a03f4b742eba894fc5680"
+  integrity sha1-jFyPHZWL44CamgP0t0LrqJT8VoA=
 
 diff-sequences@^26.6.2:
   version "26.6.2"
@@ -638,7 +638,7 @@ isarray@~1.0.0:
 
 jest-diff@^26.0.0:
   version "26.6.2"
-  resolved "https://registry.nlark.com/jest-diff/download/jest-diff-26.6.2.tgz?cache=0&sync_timestamp=1631520528996&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fjest-diff%2Fdownload%2Fjest-diff-26.6.2.tgz#1aa7468b52c3a68d7d5c5fdcdfcd5e49bd164394"
+  resolved "https://registry.npmmirror.com/jest-diff/download/jest-diff-26.6.2.tgz#1aa7468b52c3a68d7d5c5fdcdfcd5e49bd164394"
   integrity sha1-GqdGi1LDpo19XF/c381eSb0WQ5Q=
   dependencies:
     chalk "^4.0.0"
@@ -733,9 +733,9 @@ minimist@^1.2.0, minimist@^1.2.5:
     minimist "^1.2.5"
 
 naive-ui@^2.16.0:
-  version "2.19.1"
-  resolved "https://registry.npmmirror.com/naive-ui/download/naive-ui-2.19.1.tgz#7dc39676ca0b0da1aacee6127f466ae63446700e"
-  integrity sha1-fcOWdsoLDaGqzuYSf0Zq5jRGcA4=
+  version "2.19.5"
+  resolved "https://registry.npmmirror.com/naive-ui/download/naive-ui-2.19.5.tgz#f0f7f054998a9e916d260363485724d5b6f1cd26"
+  integrity sha1-8PfwVJmKnpFtJgNjSFck1bbxzSY=
   dependencies:
     "@css-render/plugin-bem" "^0.15.6"
     "@css-render/vue3-ssr" "^0.15.6"
@@ -749,12 +749,12 @@ naive-ui@^2.16.0:
     highlight.js "^11.0.1"
     lodash "^4.17.21"
     lodash-es "^4.17.21"
-    seemly "^0.3.1"
+    seemly "^0.3.2"
     treemate "^0.3.8"
     vdirs "^0.1.4"
     vfonts "^0.1.0"
     vooks "^0.2.6"
-    vueuc "^0.4.9"
+    vueuc "^0.4.13"
 
 nanoid@^3.1.23:
   version "3.1.25"
@@ -854,7 +854,7 @@ postcss@^8.1.10, postcss@^8.3.6:
 
 pretty-format@^26.0.0, pretty-format@^26.6.2:
   version "26.6.2"
-  resolved "https://registry.nlark.com/pretty-format/download/pretty-format-26.6.2.tgz?cache=0&sync_timestamp=1631520528416&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpretty-format%2Fdownload%2Fpretty-format-26.6.2.tgz#e35c2705f14cb7fe2fe94fa078345b444120fc93"
+  resolved "https://registry.npmmirror.com/pretty-format/download/pretty-format-26.6.2.tgz#e35c2705f14cb7fe2fe94fa078345b444120fc93"
   integrity sha1-41wnBfFMt/4v6U+geDRbREEg/JM=
   dependencies:
     "@jest/types" "^26.6.2"
@@ -869,7 +869,7 @@ process-nextick-args@~2.0.0:
 
 react-is@^17.0.1:
   version "17.0.2"
-  resolved "https://registry.npmmirror.com/react-is/download/react-is-17.0.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Freact-is%2Fdownload%2Freact-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
+  resolved "https://registry.npmmirror.com/react-is/download/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha1-5pHUqOnHiTZWVVOas3J2Kw77VPA=
 
 readable-stream@^2.0.2, readable-stream@~2.3.6:
@@ -931,10 +931,10 @@ sass@^1.38.1:
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
-seemly@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.nlark.com/seemly/download/seemly-0.3.1.tgz#bcb439d7e399a7cc546ca86c31d24328cc3944ca"
-  integrity sha1-vLQ51+OZp8xUbKhsMdJDKMw5RMo=
+seemly@^0.3.1, seemly@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.npmmirror.com/seemly/download/seemly-0.3.2.tgz#f45aacb2a0748bb9da766b5cf805d3b59ac9502c"
+  integrity sha1-9FqssqB0i7nadmtc+AXTtZrJUCw=
   dependencies:
     "@types/jest" "^26.0.20"
 
@@ -1051,9 +1051,9 @@ vite@^2.3.8:
     fsevents "~2.3.2"
 
 vooks@^0.2.4, vooks@^0.2.6:
-  version "0.2.8"
-  resolved "https://registry.nlark.com/vooks/download/vooks-0.2.8.tgz#fad6a78c72e39443e56285337b0843baaeed0f3e"
-  integrity sha1-+tanjHLjlEPlYoUzewhDuq7tDz4=
+  version "0.2.9"
+  resolved "https://registry.npmmirror.com/vooks/download/vooks-0.2.9.tgz#34cdbac07c735b6c4d1e816a3472fc72517097f4"
+  integrity sha1-NM26wHxzW2xNHoFqNHL8clFwl/Q=
   dependencies:
     evtd "^0.2.2"
 
@@ -1080,10 +1080,10 @@ vue@^3.2:
     "@vue/runtime-dom" "3.2.8"
     "@vue/shared" "3.2.8"
 
-vueuc@^0.4.9:
-  version "0.4.10"
-  resolved "https://registry.nlark.com/vueuc/download/vueuc-0.4.10.tgz#ae26ba76a0af154f8a139ef3718135a2c6adf676"
-  integrity sha1-ria6dqCvFU+KE57zcYE1osat9nY=
+vueuc@^0.4.13:
+  version "0.4.13"
+  resolved "https://registry.npmmirror.com/vueuc/download/vueuc-0.4.13.tgz#e037bf2ab706b3564a8f9c8f1457330184983a68"
+  integrity sha1-4De/KrcGs1ZKj5yPFFczAYSYOmg=
   dependencies:
     css-render "^0.15.3"
     evtd "^0.2.2"

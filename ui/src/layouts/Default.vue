@@ -256,7 +256,7 @@ function logout() {
   router.push("/login");
 }
 
-function changeTheme(value: boolean | undefined) {
+function changeTheme(value: any) {
   store.commit(Mutations.SetTheme, value ? "dark" : "light");
 }
 

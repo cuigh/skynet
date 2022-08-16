@@ -3,10 +3,10 @@ package client
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/cuigh/auxo/app/ioc"
 	"net/http"
 	"strings"
 
-	"github.com/cuigh/auxo/app/container"
 	"github.com/cuigh/auxo/config"
 	"github.com/cuigh/auxo/errors"
 	"github.com/cuigh/auxo/net/web"
@@ -94,5 +94,5 @@ func (c *Client) do(path string, args interface{}) error {
 }
 
 func init() {
-	container.Put(func() *Client { return NewClient() }, container.Name("skynet.client"))
+	ioc.Put(func() *Client { return NewClient() }, ioc.Name("skynet.client"))
 }

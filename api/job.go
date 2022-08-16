@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/net/web"
 	"github.com/cuigh/skynet/schedule"
@@ -70,7 +70,7 @@ func jobRetry() web.HandlerFunc {
 		args := &Args{}
 		err := ctx.Bind(args)
 		if err == nil {
-			err = container.Call(func(s *schedule.Scheduler) error {
+			err = ioc.Call(func(s *schedule.Scheduler) error {
 				return s.Retry(args.Id)
 			})
 		}

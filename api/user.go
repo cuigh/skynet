@@ -1,15 +1,14 @@
 package api
 
 import (
-	"strings"
-
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/errors"
 	"github.com/cuigh/auxo/net/web"
 	"github.com/cuigh/auxo/security/passwd"
 	"github.com/cuigh/skynet/auth"
 	"github.com/cuigh/skynet/store"
+	"strings"
 )
 
 // UserHandler encapsulates user related handlers.
@@ -59,7 +58,7 @@ func userSignIn(store store.UserStore) web.HandlerFunc {
 		if err != nil {
 			return err
 		} else if user != nil && passwd.Validate(args.Password, user.Password, user.Salt) {
-			jwt := container.Find("authenticator").(*auth.JWT)
+			jwt := ioc.Find[*auth.JWT]("authenticator")
 			token, err := jwt.CreateToken(user.Id, user.Name)
 			if err != nil {
 				return err
@@ -99,7 +98,7 @@ func userSave(s store.UserStore) web.HandlerFunc {
 }
 
 //func userRefreshToken(ctx web.Context) error {
-//	jwt := container.Find("authenticator").(*auth.JWT)
+//	jwt := ioc.Find[*auth.JWT]("authenticator")
 //	token, err := jwt.CreateToken(ctx.User().ID(), ctx.User().Name())
 //	if err != nil {
 //		return err

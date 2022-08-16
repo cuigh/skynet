@@ -1,10 +1,10 @@
 package schedule
 
 import (
+	"github.com/cuigh/auxo/app/ioc"
 	"time"
 
 	"github.com/cuigh/auxo/app"
-	"github.com/cuigh/auxo/app/container"
 	"github.com/cuigh/auxo/config"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/errors"
@@ -93,10 +93,13 @@ func NewScheduler(lock lock.Lock, resolver Resolver, ts store.TaskStore, js stor
 func (s *Scheduler) Start() {
 	s.tf.Start(s.updater)
 
+	var t Timer
+	defer t.Stop()
+
 	for {
-		d := s.try()
+		t.Reset(s.try())
 		select {
-		case <-time.After(d):
+		case <-t.C:
 			continue
 		case s.th = <-s.updater:
 			s.logger.Info("update tasks")
@@ -302,19 +305,40 @@ func (f *TaskFetcher) refresh() (updated bool) {
 	return true
 }
 
+type Timer struct {
+	*time.Timer
+}
+
+func (t *Timer) Reset(d time.Duration) {
+	if t.Timer == nil {
+		t.Timer = time.NewTimer(d)
+	} else {
+		if !t.Timer.Stop() {
+			<-t.C
+		}
+		t.Timer.Reset(d)
+	}
+}
+
+func (t *Timer) Stop() {
+	if t.Timer != nil {
+		t.Timer.Stop()
+	}
+}
+
 func init() {
 	app.OnInit(func() error {
 		// register resolver service
 		resolver := config.GetString("skynet.resolver")
 		switch resolver {
 		case "", "direct":
-			container.Put(NewDirectResolver, container.Name("resolver"))
+			ioc.Put(NewDirectResolver, ioc.Name("resolver"))
 		default:
 			return errors.Format("not supported resolver: %s", resolver)
 		}
 
-		container.Put(NewScheduler, container.Name("scheduler"))
-		container.Put(NewAlerter, container.Name("alerter"))
+		ioc.Put(NewScheduler, ioc.Name("scheduler"))
+		ioc.Put(NewAlerter, ioc.Name("alerter"))
 		return nil
 	})
 }

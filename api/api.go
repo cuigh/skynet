@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/net/web"
 )
 
@@ -23,10 +23,10 @@ func success(ctx web.Context, data interface{}) error {
 }
 
 func init() {
-	container.Put(NewSystem, container.Name("api.system"))
-	container.Put(NewTask, container.Name("api.task"))
-	container.Put(NewJob, container.Name("api.job"))
-	container.Put(NewUser, container.Name("api.user"))
-	container.Put(NewRole, container.Name("api.role"))
-	container.Put(NewConfig, container.Name("api.config"))
+	ioc.Put(NewSystem, ioc.Name("api.system"))
+	ioc.Put(NewTask, ioc.Name("api.task"))
+	ioc.Put(NewJob, ioc.Name("api.job"))
+	ioc.Put(NewUser, ioc.Name("api.user"))
+	ioc.Put(NewRole, ioc.Name("api.role"))
+	ioc.Put(NewConfig, ioc.Name("api.config"))
 }

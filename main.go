@@ -2,13 +2,9 @@ package main
 
 import (
 	"embed"
-	"io/fs"
-	"net/http"
-	"time"
-
 	"github.com/cuigh/auxo/app"
-	"github.com/cuigh/auxo/app/container"
 	"github.com/cuigh/auxo/app/flag"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/config"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/data/valid"
@@ -21,6 +17,9 @@ import (
 	"github.com/cuigh/skynet/runner"
 	"github.com/cuigh/skynet/schedule"
 	_ "github.com/cuigh/skynet/store"
+	"io/fs"
+	"net/http"
+	"time"
 )
 
 var (
@@ -39,7 +38,7 @@ func main() {
 
 func entry(*app.Context) error {
 	// 启动调度器
-	app.Ensure(container.Call(func(s *schedule.Scheduler) {
+	app.Ensure(ioc.Call(func(s *schedule.Scheduler) {
 		go s.Start()
 	}))
 
@@ -56,12 +55,12 @@ func createWebServer() *web.Server {
 	ws.Static("/", http.FS(loadWebFS()), "index.html")
 
 	g := ws.Group("/api", findFilters("authenticator", "authorizer")...)
-	g.Handle("/system", container.Find("api.system"))
-	g.Handle("/task", container.Find("api.task"))
-	g.Handle("/job", container.Find("api.job"))
-	g.Handle("/user", container.Find("api.user"))
-	g.Handle("/role", container.Find("api.role"))
-	g.Handle("/config", container.Find("api.config"))
+	g.Handle("/system", ioc.Find("api.system"))
+	g.Handle("/task", ioc.Find("api.task"))
+	g.Handle("/job", ioc.Find("api.job"))
+	g.Handle("/user", ioc.Find("api.user"))
+	g.Handle("/role", ioc.Find("api.role"))
+	g.Handle("/config", ioc.Find("api.config"))
 
 	// runner testing
 	ws.Post("/task/execute", runner.HandleExecute, web.WithAuthorize(web.AuthAnonymous))
@@ -100,7 +99,7 @@ func handleError(ctx web.Context, err error) {
 func findFilters(names ...string) []web.Filter {
 	var filters []web.Filter
 	for _, name := range names {
-		filters = append(filters, container.Find(name).(web.Filter))
+		filters = append(filters, ioc.Find[web.Filter](name))
 	}
 	return filters
 }

@@ -1,10 +1,10 @@
 package lock
 
 import (
+	"github.com/cuigh/auxo/app/ioc"
 	"time"
 
 	"github.com/cuigh/auxo/app"
-	"github.com/cuigh/auxo/app/container"
 	"github.com/cuigh/auxo/config"
 	"github.com/cuigh/auxo/errors"
 	"github.com/cuigh/skynet/store"
@@ -35,12 +35,12 @@ func init() {
 	app.OnInit(func() error {
 		switch config.GetString("skynet.lock") {
 		case "redis":
-			container.Put(NewRedisLock, container.Name("lock"))
+			ioc.Put(NewRedisLock, ioc.Name("lock"))
 		case "mongo":
-			container.Put(store.NewLockStore, container.Name("store.lock"))
-			container.Put(NewMongoLock, container.Name("lock"))
+			ioc.Put(store.NewLockStore, ioc.Name("store.lock"))
+			ioc.Put(NewMongoLock, ioc.Name("lock"))
 		case "", "null":
-			container.Put(NewNullLock, container.Name("lock"))
+			ioc.Put(NewNullLock, ioc.Name("lock"))
 		default:
 			return errors.NotSupported
 		}

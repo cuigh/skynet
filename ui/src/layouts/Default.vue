@@ -283,10 +283,10 @@ watch(() => route.path, (path: string) => {
   background-color: #363636;
 } */
 .n-layout-sider {
-  box-shadow: 0 1px 2px rgb(10 10 10 / 10%);
+  box-shadow: 2px 0 4px -2px rgb(10 10 10 / 10%);
 }
 .n-layout-footer {
-  box-shadow: 1px 0px 2px rgb(10 10 10 / 10%);
+  box-shadow: 0px -2px 4px -2px  rgb(10 10 10 / 10%);
   /* background-image: radial-gradient(circle at 1% 1%,#328bf2,#1644ad); */
 }
 /* .n-layout-header {

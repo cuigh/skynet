@@ -3,10 +3,7 @@ package store
 import (
 	"crypto/md5"
 	"fmt"
-	"strconv"
-	"time"
-
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	mongodb "github.com/cuigh/auxo/db/mongo"
 	"github.com/cuigh/auxo/errors"
 	"github.com/cuigh/auxo/ext/times"
@@ -15,6 +12,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/x/bsonx/bsoncore"
+	"strconv"
+	"time"
 )
 
 func NewDatabase() *mongo.Database {
@@ -62,10 +61,10 @@ func (t Time) Format(layout string) string {
 }
 
 func init() {
-	container.Put(NewDatabase, container.Name("database"))
-	container.Put(NewUserStore, container.Name("store.user"))
-	container.Put(NewTaskStore, container.Name("store.task"))
-	container.Put(NewJobStore, container.Name("store.job"))
-	container.Put(NewRoleStore, container.Name("store.role"))
-	container.Put(NewConfigStore, container.Name("store.config"))
+	ioc.Put(NewDatabase, ioc.Name("database"))
+	ioc.Put(NewUserStore, ioc.Name("store.user"))
+	ioc.Put(NewTaskStore, ioc.Name("store.task"))
+	ioc.Put(NewJobStore, ioc.Name("store.job"))
+	ioc.Put(NewRoleStore, ioc.Name("store.role"))
+	ioc.Put(NewConfigStore, ioc.Name("store.config"))
 }

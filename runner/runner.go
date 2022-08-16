@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/cuigh/auxo/app"
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/ext/times"
 	"github.com/cuigh/auxo/log"
 	"github.com/cuigh/auxo/net/web"
@@ -122,7 +122,7 @@ func notify(job *contract.Job, start time.Time, code int32, info string) {
 		Start: times.ToUnixMilli(start),
 		End:   times.ToUnixMilli(time.Now()),
 	}
-	err := container.Call(func(client *client.Client) error {
+	err := ioc.Call(func(client *client.Client) error {
 		return client.Notify(param)
 	})
 	if err != nil {

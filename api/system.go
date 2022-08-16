@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/cuigh/auxo/app"
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/errors"
 	"github.com/cuigh/auxo/net/web"
@@ -37,7 +37,7 @@ func NewSystem() *SystemHandler {
 
 func systemCheckState(c web.Context) error {
 	var count int64
-	err := container.Call(func(us store.UserStore) (err error) {
+	err := ioc.Call(func(us store.UserStore) (err error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -51,7 +51,7 @@ func systemCheckState(c web.Context) error {
 }
 
 func systemInitDB(ctx web.Context) error {
-	return ajax(ctx, container.Call(func(js store.JobStore, ls store.LockStore, us store.UserStore) error {
+	return ajax(ctx, ioc.Call(func(js store.JobStore, ls store.LockStore, us store.UserStore) error {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -72,7 +72,7 @@ func systemInitUser(c web.Context) error {
 		Password  string `json:"password"`
 	}
 
-	return ajax(c, container.Call(func(us store.UserStore) error {
+	return ajax(c, ioc.Call(func(us store.UserStore) error {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 
@@ -115,7 +115,7 @@ func systemSummarize(c web.Context) error {
 		GoVersion: runtime.Version(),
 	}
 
-	err := container.Call(func(ts store.TaskStore, js store.JobStore, us store.UserStore) (err error) {
+	err := ioc.Call(func(ts store.TaskStore, js store.JobStore, us store.UserStore) (err error) {
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 		defer cancel()
 

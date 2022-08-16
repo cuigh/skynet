@@ -1,9 +1,7 @@
 package api
 
 import (
-	"time"
-
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/ext/times"
 	"github.com/cuigh/auxo/log"
@@ -11,6 +9,7 @@ import (
 	"github.com/cuigh/skynet/contract"
 	"github.com/cuigh/skynet/schedule"
 	"github.com/cuigh/skynet/store"
+	"time"
 )
 
 // TaskHandler is a controller of task.
@@ -105,7 +104,7 @@ func taskExecute() web.HandlerFunc {
 		args := &Args{}
 		err := ctx.Bind(args)
 		if err == nil {
-			err = container.Call(func(s *schedule.Scheduler) error {
+			err = ioc.Call(func(s *schedule.Scheduler) error {
 				return s.Execute(args.Name, args.Args)
 			})
 		}
@@ -135,7 +134,7 @@ func taskNotify(js store.JobStore) web.HandlerFunc {
 			return err
 		}
 		if args.Code != contract.CodeSuccess {
-			err = container.Call(func(alerter *schedule.Alerter) {
+			err = ioc.Call(func(alerter *schedule.Alerter) {
 				go alerter.Alert(args.Id, args.Info)
 			})
 			if err != nil {

@@ -1,26 +1,25 @@
 package auth
 
 import (
-	"net/http"
-	"time"
-
-	"github.com/cuigh/auxo/app/container"
+	"github.com/cuigh/auxo/app/ioc"
 	"github.com/cuigh/auxo/cache"
 	"github.com/cuigh/auxo/data"
 	"github.com/cuigh/auxo/log"
 	"github.com/cuigh/auxo/net/web"
 	"github.com/cuigh/skynet/store"
+	"net/http"
+	"time"
 )
 
 type Authorizer struct {
 	us store.UserStore
-	rv *cache.Value
+	rv *cache.Value[RolePerms]
 }
 
 func NewAuthorizer(us store.UserStore, rs store.RoleStore) web.Filter {
-	v := cache.Value{
+	v := cache.Value[RolePerms]{
 		TTL: 5 * time.Minute,
-		Load: func() (interface{}, error) {
+		Load: func() (RolePerms, error) {
 			return loadRolePerms(rs)
 		},
 	}
@@ -60,7 +59,7 @@ func (a *Authorizer) check(user web.User, auth string) bool {
 		return true
 	}
 
-	rp := a.rv.MustGet(true).(RolePerms)
+	rp := a.rv.MustGet(true)
 	for _, role := range u.Roles {
 		if rp[role].Contains(auth) {
 			return true
@@ -89,6 +88,6 @@ func loadRolePerms(rs store.RoleStore) (RolePerms, error) {
 }
 
 func init() {
-	container.Put(NewAuthorizer, container.Name("authorizer"))
-	container.Put(NewAuthenticator, container.Name("authenticator"))
+	ioc.Put(NewAuthorizer, ioc.Name("authorizer"))
+	ioc.Put(NewAuthenticator, ioc.Name("authenticator"))
 }

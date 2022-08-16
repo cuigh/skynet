@@ -40,7 +40,7 @@ const store = useStore()
 
 <style lang="scss" scoped>
 .page-header {
-  box-shadow: 0 0 3px rgb(10 10 10 / 10%);
+  box-shadow: 0 2px 4px -2px rgb(10 10 10 / 10%);
   .title {
     display: flex;
     align-items: center;

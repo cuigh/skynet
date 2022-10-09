@@ -86,7 +86,7 @@ func NewScheduler(lock lock.Lock, resolver Resolver, ts store.TaskStore, js stor
 		alerter:  alerter,
 		updater:  make(chan *TaskHeap, 1),
 		closer:   make(chan struct{}),
-		logger:   log.Get("schedule"),
+		logger:   logger,
 	}
 }
 
@@ -208,7 +208,12 @@ func (s *Scheduler) call(job *Job, retry bool) {
 		s.logger.Errorf("failed to resolve runner: %s", err)
 		return
 	}
-	result := s.callers[schema].Call(addrs, job)
+	caller := s.callers[schema]
+	if caller == nil {
+		s.logger.Errorf("caller not found: %s", schema)
+		return
+	}
+	result := caller.Call(addrs, job)
 
 	// update control info
 	err = s.js.ModifyDispatch(job.Id, result.Success(), result.Info)

@@ -55,12 +55,12 @@ func createWebServer() *web.Server {
 	ws.Static("/", http.FS(loadWebFS()), "index.html")
 
 	g := ws.Group("/api", findFilters("authenticator", "authorizer")...)
-	g.Handle("/system", ioc.Find("api.system"))
-	g.Handle("/task", ioc.Find("api.task"))
-	g.Handle("/job", ioc.Find("api.job"))
-	g.Handle("/user", ioc.Find("api.user"))
-	g.Handle("/role", ioc.Find("api.role"))
-	g.Handle("/config", ioc.Find("api.config"))
+	g.Handle("/system", ioc.Find[any]("api.system"))
+	g.Handle("/task", ioc.Find[any]("api.task"))
+	g.Handle("/job", ioc.Find[any]("api.job"))
+	g.Handle("/user", ioc.Find[any]("api.user"))
+	g.Handle("/role", ioc.Find[any]("api.role"))
+	g.Handle("/config", ioc.Find[any]("api.config"))
 
 	// runner testing
 	ws.Post("/task/execute", runner.HandleExecute, web.WithAuthorize(web.AuthAnonymous))

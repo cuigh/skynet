@@ -72,6 +72,7 @@ func (s *taskStore) Create(t *Task) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	t.ModifyTime = Time(time.Now())
 	_, err := s.c.InsertOne(ctx, t)
 	if mongo.IsDuplicateKeyError(err) {
 		return errors.Format("任务名 %s 已经存在", t.Name)
@@ -172,4 +173,3 @@ func (s *taskStore) Count(ctx context.Context) (int64, error) {
 	filter := bson.M{}
 	return s.c.CountDocuments(ctx, filter)
 }
-

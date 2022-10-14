@@ -8,7 +8,7 @@ import (
 	"github.com/robfig/cron/v3"
 )
 
-var cronParser = cron.NewParser(cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor)
+var cronParser = cron.NewParser(cron.SecondOptional | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor)
 
 // An TaskItem is something we manage in a priority queue.
 type TaskItem struct {
@@ -56,7 +56,7 @@ func NewTaskHeap(tasks []*store.Task) *TaskHeap {
 	now := time.Now()
 	items := make([]*TaskItem, len(tasks))
 	for i, task := range tasks {
-		item,err := NewItem(task)
+		item, err := NewItem(task)
 		if err != nil {
 			log.Get("schedule").Errorf("failed to create TaskItem: %s", err)
 			continue

@@ -105,7 +105,7 @@ func (s *Scheduler) Start() {
 			s.logger.Info("update tasks")
 			continue
 		case <-s.closer:
-			break
+			return
 		}
 	}
 }
@@ -319,7 +319,10 @@ func (t *Timer) Reset(d time.Duration) {
 		t.Timer = time.NewTimer(d)
 	} else {
 		if !t.Timer.Stop() {
-			<-t.C
+			select {
+			case <-t.Timer.C: // try to drain from channel
+			default:
+			}
 		}
 		t.Timer.Reset(d)
 	}
